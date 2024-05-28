@@ -1,6 +1,6 @@
 package com.sparta.onlymyproject.entity;
 
-import com.sparta.onlymyproject.dtos.ScheduleRequestDto;
+import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

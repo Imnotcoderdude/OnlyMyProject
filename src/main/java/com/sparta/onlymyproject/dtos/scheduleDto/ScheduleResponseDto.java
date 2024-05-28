@@ -1,4 +1,4 @@
-package com.sparta.onlymyproject.dtos;
+package com.sparta.onlymyproject.dtos.scheduleDto;
 
 
 import com.sparta.onlymyproject.entity.Schedule;

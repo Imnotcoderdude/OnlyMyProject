@@ -1,7 +1,7 @@
 package com.sparta.onlymyproject.controller;
 
-import com.sparta.onlymyproject.dtos.ScheduleRequestDto;
-import com.sparta.onlymyproject.dtos.ScheduleResponseDto;
+import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleRequestDto;
+import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleResponseDto;
 import com.sparta.onlymyproject.entity.Schedule;
 import com.sparta.onlymyproject.service.ScheduleService;
 import lombok.AllArgsConstructor;
