@@ -1,14 +1,13 @@
 package com.sparta.onlymyproject.service;
 
+import com.sparta.onlymyproject.dtos.ScheduleRequestDto;
 import com.sparta.onlymyproject.dtos.ScheduleResponseDto;
 import com.sparta.onlymyproject.entity.Schedule;
 import com.sparta.onlymyproject.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,5 +39,23 @@ public class ScheduleService {
         return schedules.stream()
                 .map(ScheduleResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    // 선택한 일정을 수정하는 메서드
+    // 일정의 id 값으로 접근해서 내용을 json 으로 수정해서 입력하기?
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto scheduleRequestDto) {
+        // entity 객체를 생성해서 scheduleRepository 안에 있는 id 를 findById 를 사용해서 가져오고 만약 요청받은 id가 없다면 orElseThrow 메서드로 예외처리하기
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당하는 일정이 없습니다. id = " + id));
+        // 비밀번호를 확인하는 조건문
+        if (!schedule.getSchedulePassword().equals(scheduleRequestDto.getSchedulePassword())){
+           throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        schedule.setScheduleName(scheduleRequestDto.getScheduleName());
+        schedule.setScheduleContent(scheduleRequestDto.getScheduleContent());
+        schedule.setScheduleUser(scheduleRequestDto.getScheduleUser());
+
+        scheduleRepository.save(schedule);
+
+        return new ScheduleResponseDto(schedule);
     }
 }

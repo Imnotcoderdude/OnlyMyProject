@@ -40,14 +40,10 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> setSchedule(@RequestBody ScheduleRequestDto requestDto, @PathVariable int id) {
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         // TODO : 선택한 일정 수정하는 api 작성하기
-        return null;
+        // 수정 또한 동일하게 엔티티 객체를 생성해서 사용하면 되는 것 아닌가?
+        return scheduleService.updateSchedule(id,requestDto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> deleteSchedule(@PathVariable int id) {
-        // TODO : 일정의 id를 사용하여 선택한 일정을 삭제하는 api 작성하기
-        return null;
-    }
 }
