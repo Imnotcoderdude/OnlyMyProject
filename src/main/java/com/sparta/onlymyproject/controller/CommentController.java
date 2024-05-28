@@ -21,8 +21,8 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/{id}/coments")
-    public CommentResponseDto addComment(@RequestBody Long scheduleId, @RequestBody CommentRequestDto commentRequestDto) {
+    @PostMapping("/{scheduleId}/comments")
+    public CommentResponseDto addComment(@PathVariable Long scheduleId, @RequestBody CommentRequestDto commentRequestDto) {
         return commentService.addComment(scheduleId, commentRequestDto);
     }
 }

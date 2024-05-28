@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentRequestDto {
 
+    private Long scheduleId;
+
     private String commentContent;
     private String commentUser;
 }
