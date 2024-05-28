@@ -38,11 +38,4 @@ public class Schedule {
         this.schedulePassword = requestDto.getSchedulePassword();
         this.createdAt = LocalDateTime.now();
     }
-
-    public Schedule(String scheduleName, String scheduleContent, String scheduleUser, String schedulePassword) {
-        this.scheduleName = scheduleName;
-        this.scheduleContent = scheduleContent;
-        this.scheduleUser = scheduleUser;
-        this.schedulePassword = schedulePassword;
-    }
 }

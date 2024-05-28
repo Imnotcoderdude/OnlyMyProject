@@ -15,20 +15,20 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    @PostMapping
+    // 일정을 입력받고 반환하는 api
     // 파라미터 안에 requestDto 안에는 클라이언트에게서 받아온 데이터가 들어았을 것이다.
+    @PostMapping
     public ResponseEntity<ScheduleResponseDto> addSchedule(@RequestBody ScheduleRequestDto requestDto) {
-        // TODO : 일정을 입력받고 반환하는 api 작성하기
         // 엔티티 객체를 생성해서 사용한다. 데이터 베이스에 저장하기 위해 데이터 베이스와 직접 통신하는 entity 클래스로 변환을 시켜주는 것이다.
         Schedule schedule = scheduleService.saveSchedule(requestDto.toEntity());
         ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
         return ResponseEntity.ok().body(responseDto);
     }
 
-    @GetMapping("/show")
-    public ResponseEntity<ScheduleResponseDto> getSchedule() {
-        // TODO : 선택한 일정을 조회하는 api 작성하기
-        return null;
+    // 클라이언트가 지정한 일정을 조회하는 api
+    @GetMapping("/{id}")
+    public ScheduleResponseDto getSchedule(@PathVariable Long id) {
+        return scheduleService.getSchedule(id);
     }
 
     @GetMapping("/show/all")
