@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/schedule")
@@ -31,10 +33,10 @@ public class ScheduleController {
         return scheduleService.getSchedule(id);
     }
 
-    @GetMapping("/show/all")
-    public ResponseEntity<ScheduleResponseDto> getAllSchedule() {
-        // TODO : 모든 일정 내역을 조회하는 api 작성하기
-        return null;
+    // 모든 일정을 한방에 내보냄.
+    @GetMapping
+    public List<ScheduleResponseDto> getAllSchedules() {
+        return scheduleService.getAllSchedules();
     }
 
     @PutMapping("/{id}")

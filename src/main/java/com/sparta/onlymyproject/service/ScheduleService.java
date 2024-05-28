@@ -6,6 +6,11 @@ import com.sparta.onlymyproject.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 @Service
 public class ScheduleService {
     // ScheduleRepository 인터페이스를 사용하기 위해서 필드 선언
@@ -26,5 +31,14 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 일정이 없습니다. id=" + id));
         return new ScheduleResponseDto(schedule);
+    }
+
+    // 클라이언트가 요청하면 가지고 있는 모든 일정 내보내기
+    // 모든 일정은 List 컬랙션에 담아서 내보낸다.
+    public List<ScheduleResponseDto> getAllSchedules() {
+        List<Schedule> schedules = scheduleRepository.findAll();
+        return schedules.stream()
+                .map(ScheduleResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
