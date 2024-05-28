@@ -58,4 +58,14 @@ public class ScheduleService {
 
         return new ScheduleResponseDto(schedule);
     }
+
+    // 선택한 일정을 삭제하는 메서드
+    // Url 에서 id 값을 받고 body에서 비밀번호를 받아서 검증하고 삭제함
+    public void deleteSchedule(Long id, ScheduleRequestDto scheduleRequestDto) {
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당하는 일정이 없습니다. id = " + id));
+        if (!schedule.getSchedulePassword().equals(scheduleRequestDto.getSchedulePassword())){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        scheduleRepository.delete(schedule);
+    }
 }
