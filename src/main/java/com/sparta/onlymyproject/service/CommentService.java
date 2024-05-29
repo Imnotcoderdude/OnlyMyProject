@@ -24,13 +24,6 @@ public class CommentService {
         this.scheduleRepository = scheduleRepository;
     }
 
-
-
-    // comment 의 id를 기반으로 댓글을 찾아오는 메서드
-    public Comment findById(Long id) {
-        return commentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("요청하신 댓글을 찾을 수 없습니다. id = " + id));
-    }
-
     public CommentResponseDto addComment(Long scheduleId, CommentRequestDto commentRequestDto) {
         // scheduleRepository 에 존재하는 일정의 id를 이용하여 요청된 일정을 찾는 메서드
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(()-> new IllegalArgumentException("요청하신 일정을 찾을 수 없습니다."));
@@ -48,7 +41,7 @@ public class CommentService {
     }
     // 요청된 일정의 id를 기반으로 id에 해당하는 일정을 모두 찾아오는 메서드
     public List<CommentResponseDto> getAllComment(Long scheduleId) {
-        List<Comment> comments = commentRepository.findByScheduleId(scheduleId);
+        List<Comment> comments = commentRepository.findBySchedule_Id(scheduleId);
         return comments.stream()
                 .map(CommentResponseDto::new)
                 .collect(Collectors.toList());
@@ -67,4 +60,25 @@ public class CommentService {
 
         return new CommentResponseDto(comment);
     }
+
+    // 지정된 일정 id 와 댓글 id 를 사용해 댓글을 삭제하는 메서드.
+    // 일정에 대한 id를 검사하고 그에 해당하는 댓글 id를 찾는 로직이 필요하다.
+    public void deleteComment(Long scheduleId, Long commentId) {
+        // if문을 사용해서 URI에 처음 들어오는 id 값인 일정 id 값부터 검사한 후 댓글 id 검사 if 문으로 넘어간다.
+        if (scheduleRepository.findById(scheduleId).isPresent()) {
+            // 위에서 유효한 일정 id 값인지 확인한 후 댓글 id 가 유효한지 검사한다.
+            if (commentRepository.findById(commentId).isPresent()) {
+                if (commentRepository.findById(commentId).get().getSchedule().getId().equals(scheduleId)) {
+                    commentRepository.deleteById(commentId);
+                } else {
+                    throw new IllegalArgumentException("해당 일정에 존재하는 댓글이 아닙니다.");
+                }
+            } else {
+                throw new IllegalArgumentException("해당 댓글 id는 없는 id 입니다. id = " + commentId);
+            }
+        } else {
+          throw new IllegalArgumentException("해당 일정 id는 없는 id 입니다. id = " + scheduleId);
+        }
+    }
+
 }

@@ -22,5 +22,4 @@ public class Comment {
     @ManyToOne // 다 대 1 관계 설정
     @JoinColumn(name = "schedule_id") // 일정의 고유번호가 저장되어있는 칼럼을 조인한다/
     private Schedule schedule; // 댓글이 작성되어야 할 일정의 아이디.
-
 }
