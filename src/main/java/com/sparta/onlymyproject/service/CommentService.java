@@ -54,4 +54,17 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    // 일정에 달린 댓글을 수정하는 메서드
+    // 먼저 일정을 찾기 위해 일정 id 값을 받고, 그 id 에 해당하는 일정을 찾아왔다면 그 일정 내에 원하는 댓글을 찾기 위해 댓글 id 값을 입력하고
+    // 그후 json 형식으로 수정을 요청한다.
+    public CommentResponseDto updateComment(Long scheduleId, Long commentId, CommentRequestDto requestDto) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()
+                -> new IllegalArgumentException("해당 댓글 id 는 없는 id 입니다. id = "+commentId));
+        // 댓글 내용만 수정하는 것이 조건이기에 CommentContent 만 수정이 가능하게끔 setter 설정.
+        comment.setCommentContent(requestDto.getCommentContent());
+        // 일정에 대한 정보를 저장하고 있는 CommentRepository 를 객체화 시켜서 가져온 후 save()메서드로 변경된 사항을 저장한다.
+        commentRepository.save(comment);
+
+        return new CommentResponseDto(comment);
+    }
 }

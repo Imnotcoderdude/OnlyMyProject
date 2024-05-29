@@ -30,9 +30,17 @@ public class CommentController {
         return commentService.addComment(scheduleId, commentRequestDto);
     }
 
+    // 댓글을 수정하는 api
+    // 과제의 조건이 댓글의 내용만 수정하는 것이기 떄문에 일부분만 수정할 수 있게 PutMapping 대신 PatchMapping 을 사용한다.
+    @PatchMapping("/{scheduleId}/comments/{commentId}")
+    public CommentResponseDto updateComment(@PathVariable Long scheduleId, @PathVariable Long commentId, @Valid @RequestBody CommentRequestDto requestDto) {
+        return commentService.updateComment(scheduleId,commentId,requestDto);
+    }
+
     // 요청된 일정에 대한 모든 댓글을 조회하는 api
     @GetMapping("/{scheduleId}/comments")
     public List<CommentResponseDto> getAllComments(@PathVariable Long scheduleId) {
         return commentService.getAllComment(scheduleId);
     }
+
 }
