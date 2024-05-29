@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/schedule")
+@RequestMapping("/api/schedules")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
@@ -22,7 +22,7 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> addSchedule(@RequestBody ScheduleRequestDto requestDto) {
         // 엔티티 객체를 생성해서 사용한다. 데이터 베이스에 저장하기 위해 데이터 베이스와 직접 통신하는 entity 클래스로 변환을 시켜주는 것이다.
-        Schedule schedule = scheduleService.saveSchedule(requestDto.toEntity());
+        Schedule schedule = scheduleService.addSchedule(requestDto.toEntity());
         ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
         return ResponseEntity.ok().body(responseDto);
     }

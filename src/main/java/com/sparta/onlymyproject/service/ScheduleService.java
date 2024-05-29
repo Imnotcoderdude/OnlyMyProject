@@ -21,7 +21,7 @@ public class ScheduleService {
     }
 
     // 클라이언트가 입력한 일정을 저장하는 메서드
-    public Schedule saveSchedule(Schedule schedule) {
+    public Schedule addSchedule(Schedule schedule) {
         return scheduleRepository.save(schedule);
     }
 

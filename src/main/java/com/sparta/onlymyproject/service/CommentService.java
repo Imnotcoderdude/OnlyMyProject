@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -21,6 +23,8 @@ public class CommentService {
         this.commentRepository = commentRepository;
         this.scheduleRepository = scheduleRepository;
     }
+
+
 
     // comment 의 id를 기반으로 댓글을 찾아오는 메서드
     public Comment findById(Long id) {
@@ -42,4 +46,12 @@ public class CommentService {
 
         return new CommentResponseDto(comment);
     }
+    // 요청된 일정의 id를 기반으로 id에 해당하는 일정을 모두 찾아오는 메서드
+    public List<CommentResponseDto> getAllComment(Long scheduleId) {
+        List<Comment> comments = commentRepository.findByScheduleId(scheduleId);
+        return comments.stream()
+                .map(CommentResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
 }
