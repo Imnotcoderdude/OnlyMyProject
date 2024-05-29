@@ -68,6 +68,7 @@ public class CommentService {
         if (scheduleRepository.findById(scheduleId).isPresent()) {
             // 위에서 유효한 일정 id 값인지 확인한 후 댓글 id 가 유효한지 검사한다.
             if (commentRepository.findById(commentId).isPresent()) {
+                // 이후 일정 안에 그 댓글이 존재하는지 확인하는 과정을 거친 후 최종적으로 삭제를 요청한다.
                 if (commentRepository.findById(commentId).get().getSchedule().getId().equals(scheduleId)) {
                     commentRepository.deleteById(commentId);
                 } else {

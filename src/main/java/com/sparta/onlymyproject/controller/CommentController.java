@@ -44,6 +44,8 @@ public class CommentController {
     }
 
     // 댓글을 삭제하는 api
+    // 현재 URI 의 scheduleId 를 체크하는 부분은 솔직히 그렇게 큰 의미는 없다. 각 일정별로 댓글의 id 값이 순차적으로 증가하는게 아니라 모든
+    // 댓글이 id 값을 공유하기 떄문이다. 지금은 그저 몇번 일정에 있는 댓글 삭제하려고 할때 그 그 댓글이 사용자가 입력한 id 값과 일치하는지 확인하는 용도로만 사용된다.
     @DeleteMapping("/{scheduleId}/comments/{commentId}")
     public void deleteComment(@PathVariable Long scheduleId, @PathVariable Long commentId) {
         commentService.deleteComment(scheduleId,commentId);
