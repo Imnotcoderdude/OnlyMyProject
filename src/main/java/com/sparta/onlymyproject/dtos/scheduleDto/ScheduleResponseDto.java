@@ -1,6 +1,5 @@
 package com.sparta.onlymyproject.dtos.scheduleDto;
 
-
 import com.sparta.onlymyproject.entity.Schedule;
 import lombok.Getter;
 

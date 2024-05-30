@@ -12,14 +12,14 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/schedules")
+@RequestMapping("/api")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
     // 일정을 입력받고 반환하는 api
     // 파라미터 안에 requestDto 안에는 클라이언트에게서 받아온 데이터가 들어았을 것이다.
-    @PostMapping
+    @PostMapping("/schedules")
     public ResponseEntity<ScheduleResponseDto> addSchedule(@RequestBody ScheduleRequestDto requestDto) {
         // 엔티티 객체를 생성해서 사용한다. 데이터 베이스에 저장하기 위해 데이터 베이스와 직접 통신하는 entity 클래스로 변환을 시켜주는 것이다.
         Schedule schedule = scheduleService.addSchedule(requestDto.toEntity());
@@ -28,25 +28,25 @@ public class ScheduleController {
     }
 
     // 클라이언트가 지정한 일정을 조회하는 api
-    @GetMapping("/{id}")
+    @GetMapping("/schedules/{id}")
     public ScheduleResponseDto getSchedule(@PathVariable Long id) {
         return scheduleService.getSchedule(id);
     }
 
     // 모든 일정을 한방에 내보냄.
-    @GetMapping
+    @GetMapping("/schedules")
     public List<ScheduleResponseDto> getAllSchedules() {
         return scheduleService.getAllSchedules();
     }
 
     // 선택한 일정을 수정하는 메서드
-    @PutMapping("/{id}")
+    @PutMapping("/schedules/{id}")
     public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         return scheduleService.updateSchedule(id,requestDto);
     }
 
     // 선택한 일정을 삭제하는 api
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/schedules/{id}")
     public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         scheduleService.deleteSchedule(id, requestDto);
     }
