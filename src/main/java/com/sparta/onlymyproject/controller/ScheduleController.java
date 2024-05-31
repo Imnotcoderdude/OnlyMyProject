@@ -48,7 +48,7 @@ public class ScheduleController {
     // 선택한 일정을 삭제하는 api
     @DeleteMapping("/schedules/{id}")
     public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
-        scheduleService.deleteSchedule(id, requestDto);
+        scheduleService.delete(id, requestDto);
     }
 
 }
