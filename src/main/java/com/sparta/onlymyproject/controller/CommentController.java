@@ -5,7 +5,6 @@ import com.sparta.onlymyproject.dtos.commentDto.CommentResponseDto;
 import com.sparta.onlymyproject.service.CommentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

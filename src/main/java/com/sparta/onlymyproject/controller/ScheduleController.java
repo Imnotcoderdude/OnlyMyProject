@@ -8,6 +8,7 @@ import com.sparta.onlymyproject.jwt.JwtUtil;
 import com.sparta.onlymyproject.service.ScheduleService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class ScheduleController {
     // 일정을 입력받고 반환하는 api
     // 파라미터 안에 requestDto 안에는 클라이언트에게서 받아온 데이터가 들어았을 것이다.
     @PostMapping("/schedules")
-    public ResponseEntity<ScheduleResponseDto> addSchedule(@RequestBody ScheduleRequestDto requestDto) {
+    public ResponseEntity<ScheduleResponseDto> addSchedule(@Valid @RequestBody ScheduleRequestDto requestDto) {
         // 엔티티 객체를 생성해서 사용한다. 데이터 베이스에 저장하기 위해 데이터 베이스와 직접 통신하는 entity 클래스로 변환을 시켜주는 것이다.
         Schedule schedule = scheduleService.addSchedule(requestDto.toEntity());
         ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
@@ -47,13 +48,13 @@ public class ScheduleController {
 
     // 선택한 일정을 수정하는 메서드
     @PutMapping("/schedules/{id}")
-    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @Valid @RequestBody ScheduleRequestDto requestDto) {
         return scheduleService.updateSchedule(id,requestDto);
     }
 
     // 선택한 일정을 삭제하는 api
     @DeleteMapping("/schedules/{id}")
-    public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+    public void deleteSchedule(@PathVariable Long id, @Valid @RequestBody ScheduleRequestDto requestDto) {
         scheduleService.delete(id, requestDto);
     }
 

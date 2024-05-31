@@ -2,6 +2,7 @@ package com.sparta.onlymyproject.entity;
 
 import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +21,13 @@ public class Schedule {
     @Column
     private Long id;
 
+    @NotBlank(message = "일정의 제목은 비워둘 수 없습니다.")
     private String scheduleName; // 일정 제목
+    @NotBlank(message = "일정의 내용은 비워둘 수 없습니다.")
     private String scheduleContent; // 일정 내용
+    @NotBlank(message = "일정의 작성자를 비워두지 마십시오.")
     private String scheduleUser; // 일정 작성자
+
     private String schedulePassword; // 일정 비밀번호
 
     @CreatedDate
