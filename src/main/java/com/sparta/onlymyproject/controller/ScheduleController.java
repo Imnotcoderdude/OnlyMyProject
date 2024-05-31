@@ -3,7 +3,11 @@ package com.sparta.onlymyproject.controller;
 import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleRequestDto;
 import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleResponseDto;
 import com.sparta.onlymyproject.entity.Schedule;
+import com.sparta.onlymyproject.entity.UserRoleEnum;
+import com.sparta.onlymyproject.jwt.JwtUtil;
 import com.sparta.onlymyproject.service.ScheduleService;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api")
 public class ScheduleController {
+
+    private final JwtUtil jwtUtil;
 
     private final ScheduleService scheduleService;
 
@@ -49,6 +55,41 @@ public class ScheduleController {
     @DeleteMapping("/schedules/{id}")
     public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         scheduleService.delete(id, requestDto);
+    }
+
+    // JWT 토큰 생성
+    @GetMapping("/create-jwt")
+    public String createJwt(HttpServletResponse res) {
+        // Jwt 생성
+        String token = jwtUtil.createToken("조규성", UserRoleEnum.USER);
+
+        // Jwt 쿠키 저장
+        jwtUtil.addJwtToCookie(token, res);
+
+        return "createJwt : " + token;
+    }
+
+    // JWT 토큰 검증
+    @GetMapping("/get-jwt")
+    public String getJwt(@CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue) {
+        // JWT 토큰 substring
+        String token = jwtUtil.substringToken(tokenValue);
+
+        // 토큰 검증
+        if(!jwtUtil.validateToken(token)){
+            throw new IllegalArgumentException("Token Error");
+        }
+
+        // 토큰에서 사용자 정보 가져오기
+        Claims info = jwtUtil.getUserInfoFromToken(token);
+        // 사용자 username
+        String username = info.getSubject();
+        System.out.println("username = " + username);
+        // 사용자 권한
+        String authority = (String) info.get(JwtUtil.AUTHORIZATION_KEY);
+        System.out.println("authority = " + authority);
+
+        return "getJwt : " + username + ", " + authority;
     }
 
 }
