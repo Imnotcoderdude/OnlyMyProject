@@ -3,11 +3,7 @@ package com.sparta.onlymyproject.controller;
 import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleRequestDto;
 import com.sparta.onlymyproject.dtos.scheduleDto.ScheduleResponseDto;
 import com.sparta.onlymyproject.entity.Schedule;
-import com.sparta.onlymyproject.entity.UserRoleEnum;
-import com.sparta.onlymyproject.jwt.JwtUtil;
 import com.sparta.onlymyproject.service.ScheduleService;
-import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api")
 public class ScheduleController {
-
-    private final JwtUtil jwtUtil;
 
     private final ScheduleService scheduleService;
 

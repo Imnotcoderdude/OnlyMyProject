@@ -27,7 +27,7 @@ public class Schedule {
     private String scheduleContent; // 일정 내용
     @NotBlank(message = "일정의 작성자를 비워두지 마십시오.")
     private String scheduleUser; // 일정 작성자
-
+    @NotBlank(message = "일정의 비밀번호는 비워둘 수 없습니다.")
     private String schedulePassword; // 일정 비밀번호
 
     @CreatedDate

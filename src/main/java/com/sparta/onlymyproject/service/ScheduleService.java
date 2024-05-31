@@ -6,6 +6,7 @@ import com.sparta.onlymyproject.entity.Comment;
 import com.sparta.onlymyproject.entity.Schedule;
 import com.sparta.onlymyproject.repository.CommentRepository;
 import com.sparta.onlymyproject.repository.ScheduleRepository;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class ScheduleService {
     }
 
     // 클라이언트가 입력한 일정을 저장하는 메서드
+    @NotBlank
     public Schedule addSchedule(Schedule schedule) {
         return scheduleRepository.save(schedule);
     }
@@ -48,6 +50,7 @@ public class ScheduleService {
 
     // 선택한 일정을 수정하는 메서드
     // 일정의 id 값으로 접근해서 내용을 json 으로 수정해서 입력하기?
+    @NotBlank
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto scheduleRequestDto) {
         // entity 객체를 생성해서 scheduleRepository 안에 있는 id 를 findById 를 사용해서 가져오고 만약 요청받은 id가 없다면 orElseThrow 메서드로 예외처리하기
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당하는 일정이 없습니다. id = " + id));
