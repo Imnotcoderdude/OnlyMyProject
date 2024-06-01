@@ -1,8 +1,10 @@
 package com.sparta.onlymyproject.controller;
 
 import com.sparta.onlymyproject.dtos.auth.AuthRequest;
+import com.sparta.onlymyproject.dtos.auth.AuthResponse;
 import com.sparta.onlymyproject.dtos.register.RegisterRequest;
 import com.sparta.onlymyproject.dtos.register.RegisterResponse;
+import com.sparta.onlymyproject.entity.User;
 import com.sparta.onlymyproject.service.UserService;
 import com.sparta.onlymyproject.util.JwtTokenProvider;
 import jakarta.validation.Valid;
@@ -40,13 +42,22 @@ public class AuthController {
         }
     }
 
-    // Todo : 회원가입 api
+    // 회원가입 api
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest registerRequest) {
 
         userService.register(registerRequest);
         RegisterResponse registerResponse = new RegisterResponse("유저등록 성공");
         return new ResponseEntity<>(registerResponse, HttpStatus.CREATED);
+    }
+
+    // 로그인 api
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest authRequest) {
+        User user = userService.login(authRequest.getUsername(),authRequest.getPassword());
+        String token = JwtTokenProvider.generateToken(user.getUsername());
+        AuthResponse authResponse = new AuthResponse("로그인 성공", token);
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
 }
