@@ -18,7 +18,6 @@ public class Schedule {
     // entity 사용을 위한 Id 설정.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
     @NotBlank(message = "일정의 제목은 비워둘 수 없습니다.")

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long commentId; // 댓글 식별 번호
 
     @NotBlank(message = "댓글의 내용을 비워 둘 수 없습니다.")
